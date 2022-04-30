@@ -32,9 +32,9 @@ The physical console has:
       - physical output 1 (A1)
       - physical output 2 (A2)
       - physical output 3 (A3)    
-    - 2 rotary knobs on channel 1 (my mic in)
+  - 2 rotary knobs on channel 1 (my mic in)
     - - Compression and Noise Gate adjustments but can be assigned to anything     
-    - 24 dedicated switches
+  - 24 dedicated switches
     - - mic mute for mic in channel
     - - mute, A1, A2, A3 buttons for each virtual and physical input
     - - mute buttons for each phsyical output (A1, A2, A3)
