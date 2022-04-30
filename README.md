@@ -5,12 +5,9 @@ arduino code for a teensy 4.1 midi controller specifically designed for use with
 voice meeter banana has 10 channels. I designed this console for my use and it may not apply for everyone, but I think this is a common application:
 
 - 3 "physical" inputs
-- 
-    --- mic input from user
-    
-    --- input for desktop audio (browser, specific applications, etc)
-    
-    --- input for game audio
+- mic input from user    
+- input for desktop audio (browser, specific applications, etc)
+- input for game audio
   
   - 2 virtual inputs
     --- VoiceMeeter Input - input for "catchall" audio from system (system notifications, etc) 
