@@ -2,30 +2,58 @@
 #include <Keypad.h>
 
 /*
-A 10
-B 11
-C 12
-D 13
-E 14
-F 15
-G 16
-H 17
-I 18
-J 19
-K 20
-L 21
-M 22
-N 23
-O 24
-P 25
-Q 26
-R 27
-S 28
-T 29
-U 30
-V 31
-W 32
-X 33
+I mapped the 24 keys to letters for the keypad char values. These are the letter to MIDI CCID mappings I'm using. 
+To get the CCID value for the key, I just add 10 to the key's position in the matrix. So when the key is actuated, 
+the program will send 10 + the pos variable as the MIDI CCID. This is a shitty hack that might bite me in the future 
+but it works for now. 
+
+Pins: 
+  Cols: 2, 3, 4, 5, 6, 7
+  Rows: 8, 9, 10, 11
+
+char  index ccid
+A     0     10
+B     1     11
+C     2     12
+D     3     13
+E     4     14
+F     5     15
+G     6     16
+H     7     17
+I     8     18
+J     9     19
+K     10    20
+L     11    21
+M     12    22
+N     13    23
+O     14    24
+P     15    25
+Q     16    26
+R     17    27
+S     18    28
+T     19    29
+U     20    30
+V     21    31
+W     22    32
+X     23    33
+
+The potentiometer start at CCID 40. I wanted the sliders to have  different range 
+so I can recognise them easier while debugging. This may not be good practice for 
+MIDI but I don't know any better so lets see if it works...
+
+Pins: A3, A4, A6, A7, A8, A9, A10, A11, A12, A13 
+      (I skipped A5 for no particular reason but cleaner wiring in my prototype.)
+  pot       pin   CCID 
+  Rotary 1  A6    40
+  Rotary 2  A8    41
+  Slider 1  A7    42
+  Slider 2  A9    43
+  Slider 3  A4    44
+  Slider 4  A3    45
+  Slider 5  A13   46
+  Slider 6  A12   47
+  Slider 7  A11   48
+  Slider 8  A10   49
  */
 
 // rows and cols for the keypad matrix
@@ -38,7 +66,7 @@ const int analogInputs = 10;
 // define slider pins and cc codes
 const int A_PINS = analogInputs;
 const int ANALOG_PINS[A_PINS] = {A3, A4, A6, A7, A8, A9, A10, A11, A12, A13};
-const int CCID[A_PINS] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 45};
+const int CCID[A_PINS] = {45, 44, 40, 42, 41, 43, 49, 49, 47, 46};
 
 // define button pins
 //const byte rowPins[ROWS] = {2, 3, 4, 5, 6, 7}; 
@@ -112,37 +140,34 @@ void loop(){
   // make keypad object   
   char key = keypad.getKey();
 
-  // if there's a value, send it to midi
+  // if keypad has a key value, send it to midi
   if (key != NO_KEY){
         
-int pos = 0;  
-  for(int i=0;i<ROWS;i++){
-    for(int j=0;j<COLS;j++){
-      if(key == keys[i][j]){
-        int CCID = pos+10;
-        usbMIDI.sendControlChange (CCID, MIDI_CC_VAL, MIDI_CHAN); 
-        Serial.print("Sent: ");
-        Serial.print(CCID);
-        Serial.print(" for key: ");
-        Serial.print(key);
-        Serial.print(" with data: ");
-        Serial.print(MIDI_CC_VAL);
-        Serial.println("");
+  int pos = 0;  
+    for(int i=0;i<ROWS;i++){
+      for(int j=0;j<COLS;j++){
+        if(key == keys[i][j]){
+          int CCID = pos+10;
+          usbMIDI.sendControlChange (CCID, MIDI_CC_VAL, MIDI_CHAN); 
+          Serial.print("Sent: ");
+          Serial.print(CCID);
+          Serial.print(" for key: ");
+          Serial.print(key);
+          Serial.print(" with data: ");
+          Serial.print(MIDI_CC_VAL);
+          Serial.println("");
+        }
+        pos++;
       }
-      pos++;
     }
-  }
   } 
 
   // update the ResponsiveAnalogRead object every loop
   for (int i=0;i<A_PINS;i++){
-
     analog[i].update(); 
-
     // if the repsonsive value has change, print out 'changed'
     if(analog[i].hasChanged()) 
     {
-
       data[i] = analog[i].getValue()>>3;
       if (data[i] != dataLag[i]){
         dataLag[i] = data[i];
