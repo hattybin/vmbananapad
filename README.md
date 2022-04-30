@@ -24,22 +24,20 @@ voice meeter banana has 10 channels. I designed this console for my use and it m
     
 The physical console has:
   - 8 dedicated sliders
-    - mic in volume (slightly offset from the other 4 input channels)
-    - virtual input 2
-    - virtual input 3
-    - physical input 1
-    - physical input 2
-    - physical output 1 (A1)
-    - physical output 2 (A2)
-    - physical output 3 (A3)
-    
+      - mic in volume (slightly offset from the other 4 input channels)
+      - virtual input 2
+      - virtual input 3
+      - physical input 1
+      - physical input 2
+      - physical output 1 (A1)
+      - physical output 2 (A2)
+      - physical output 3 (A3)    
     - 2 rotary knobs on channel 1 (my mic in)
-    - Compression and Noise Gate adjustments but can be assigned to anything
-     
+    - - Compression and Noise Gate adjustments but can be assigned to anything     
     - 24 dedicated switches
-    - mic mute for mic in channel
-    - mute, A1, A2, A3 buttons for each virtual and physical input
-    - mute buttons for each phsyical output (A1, A2, A3)
-    - 4 misc assignable switches
-    - I use 1 for a Voicemeeter macro to 'Reset Audio Engine' when I connect a bluetooth headset.
+    - - mic mute for mic in channel
+    - - mute, A1, A2, A3 buttons for each virtual and physical input
+    - - mute buttons for each phsyical output (A1, A2, A3)
+    - - 4 misc assignable switches
+    - - I use 1 for a Voicemeeter macro to 'Reset Audio Engine' when I connect a bluetooth headset.
         
