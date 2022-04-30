@@ -2,6 +2,15 @@
 
 arduino code for a teensy 4.1 midi controller specifically designed for use with voicemeeter bannana and simple broadcasting for streaming or video conferencing
 
+this project uses:
+- resposiveanalogread - https://github.com/dxinteractive/ResponsiveAnalogRead
+- keypad - https://github.com/Chris--A/Keypad
+
+For the electronics I used:
+  - 24 clicky mechancial keyboard switches configured in a matrix of 4 rows and 6 columns. Diodes on the rows and wired to digital pins 2 - 11.  
+  - 8 75mm potentiometers 
+  - 2 rotary potentiometer I salvaged from a broken midi controller. They are 3 pin but I don't know their specs.
+
 voice meeter banana has 10 channels. I designed this console for my use and it may not apply for everyone, but I think this is a common application:
 
 - 3 "physical" inputs
