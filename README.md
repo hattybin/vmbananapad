@@ -50,3 +50,4 @@ The physical console has:
       - 4 misc assignable switches
       - I use 1 for a Voicemeeter macro to 'Reset Audio Engine' when I connect a bluetooth headset.
         
+![image](https://user-images.githubusercontent.com/1077409/166650103-03a1fa82-2830-4810-a70f-194dab479040.png)
