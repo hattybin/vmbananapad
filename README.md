@@ -1,5 +1,7 @@
 # vmbananapad
-
+This is the prototype I made using a Teensy 4 and the enclosure I made in Fusion 360. It's basic and I have ideas to improve it already:
+       
+![image](https://user-images.githubusercontent.com/1077409/166650103-03a1fa82-2830-4810-a70f-194dab479040.png)
 arduino code for a teensy 4 or 4.1 midi controller specifically designed for use with voicemeeter bannana and simple broadcasting for streaming or video conferencing
 
 this project uses:
@@ -50,9 +52,6 @@ The physical console has:
       - 4 misc assignable switches
       - I use 1 for a Voicemeeter macro to 'Reset Audio Engine' when I connect a bluetooth headset.
 
-This is the prototype I made using a Teensy 4 and the enclosure I made in Fusion 360. It's basic and I have ideas to improve it already:
-       
-![image](https://user-images.githubusercontent.com/1077409/166650103-03a1fa82-2830-4810-a70f-194dab479040.png)
 
 Wiring:
 I don't know how to sketch a pcb wiring diagram so this is the best I can do. I separated the analog and digital pin wiring so it wouldn't be as confusing.
