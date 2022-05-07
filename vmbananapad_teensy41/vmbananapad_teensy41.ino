@@ -128,49 +128,77 @@ ResponsiveAnalogRead analog[]{
   {ANALOG_PINS[9],true}
 }; 
 
+// map function to convert values from a given range to the desired range
 long map(long x, long in_min, long in_max, long out_min, long out_max)
 {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
+
+// map function to convert the char value of the keymatrix to an int
+// it uses the characters position in the alphabet for the MIDI CCID value
+int charMap(char in_key) {
+   char alphabet[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};   
+   for (int i = 0; i < 26; i++) {
+      if(in_key == alphabet[i]){
+        return i;
+      }
+   }
+   return -1;
+}
+
+unsigned long loopCount;
+unsigned long startTime;
+
+String msg;
 
 // the setup routine runs once when you press reset:
 void setup() 
 {  
   // initialize serial monitor output
   Serial.begin(9600);
+  loopCount = 0;
+  startTime = millis();
+  msg = "";
 }
 
 void loop()
 {
-
-  // buttons
-  // make keypad object   
-  char key = keypad.getKey();
-
-  // if keypad has a key value, send it to midi
-  if (key != NO_KEY)
-  {
-    int pos = 0;  
-    for(int i=0;i<ROWS;i++)
+    // new nkro keypad code
+    if (keypad.getKeys())
     {
-      for(int j=0;j<COLS;j++)
-      {
-        if(key == keys[i][j])
+        for (int i=0; i<LIST_MAX; i++)   
         {
-          int CCID = pos+10;
-          usbMIDI.sendControlChange (CCID, MIDI_CC_VAL, MIDI_CHAN); 
-          Serial.print("Sent: ");
-          Serial.print(CCID);
-          Serial.print(" for key: ");
-          Serial.print(key);
-          Serial.print(" with data: ");
-          Serial.print(MIDI_CC_VAL);
-          Serial.println("");
+            if ( keypad.key[i].stateChanged )   
+            {
+                switch (keypad.key[i].kstate) {  
+                    case PRESSED:
+                    msg = " PRESSED.";
+                break;
+                    case HOLD:
+                    msg = " HOLD.";
+                break;
+                    case RELEASED:
+                    msg = " RELEASED.";
+                    if(charMap(keypad.key[i].kchar) > 0) 
+                    {
+                      usbMIDI.sendControlChange(charMap(keypad.key[i].kchar), MIDI_CC_VAL, MIDI_CHAN);                       
+                      msg = msg + "CCID sent: " + charMap(keypad.key[i].kchar) + " for key: ";
+                    } else 
+                    {
+                      msg = msg + "CCID not sent. Error finding value.";
+                    }
+                    
+                    
+                break;
+                    case IDLE:
+                    msg = " IDLE.";
+                }
+                Serial.print("Key ");
+                Serial.print(keypad.key[i].kchar);
+                Serial.println(msg);
+            }
         }
-        pos++;
-      }
     }
-  } 
 
   // update the ResponsiveAnalogRead object every loop
   for (int i=0;i<A_PINS;i++)
@@ -184,6 +212,7 @@ void loop()
         {
           dataLag[i] = data[i];          
           usbMIDI.sendControlChange(CCID[i], data[i], 1);
+          // this is just debugging 
           if(i == 2 || i == 4)
             { 
               Serial.print("KNOB CCID: ");
